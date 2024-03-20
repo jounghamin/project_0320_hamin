@@ -41,7 +41,7 @@ def lecture_detail(request, id):
         lecture = Lecture.objects.get(id=id) # 어떤 게시글을 수정할지
         data = request.data # 어떤 내용으로 수정할지
 
-        serializer = LectureSerializers(lecture, data=data)
+        serializer = LectureSerializers(lecture, data=data ,partial=True)
         # serializer = ArticleSerializer(article, data=data, partial=True)  # 부분 수정
 
         if serializer.is_valid(raise_exception=True):
@@ -49,6 +49,6 @@ def lecture_detail(request, id):
             return Response(serializer.data)
     
     elif request.method == 'DELETE':
-        article = Lecture.objects.get(id=id)
-        article.delete()
+        lecture = Lecture.objects.get(id=id)
+        lecture.delete()
         return Response(status=204) # no content

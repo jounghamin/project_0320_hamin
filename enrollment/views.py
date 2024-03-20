@@ -43,16 +43,23 @@ def enrollment_list(request):
             return Response(serializer.data, status=201)
         
 
-# @api_view(['GET', 'PUT', 'DELETE'])
-# def lecture_detail(request, id):
-#     if request.method == 'GET':
-#         lecture = Lecture.objects.get(id=id)
-#         serializer = LectureSerializers(lecture)
-#         return Response(serializer.data)
+@api_view(['GET', 'PUT', 'DELETE'])
+def enrollment_detail(request, id):
+    if request.method == 'GET':
+        enrollment = Enrollment.objects.get(id=id)
+        serializer = EnrollmentSerializers(enrollment)
+        return Response(serializer.data)
     
-#     elif request.method == 'PUT':
-#         lecture = Lecture.objects.get(id=id) # 어떤 게시글을 수정할지
-#         data = request.data # 어떤 내용으로 수정할지
+    elif request.method == 'PUT':
+        enrollment = Enrollment.objects.get(id=id) # 어떤 게시글을 수정할지
+        data = request.data # 어떤 내용으로 수정할지
 
-#         serializer = LectureSerializ
-# # Create your views here.
+        serializer = EnrollmentSerializers(enrollment, data= data, partial=True)
+        if serializer.is_valid(raise_exception=True):
+            serializer.save()
+            return Response(serializer.data)
+    
+    elif request.method == 'DELETE':
+        enrollment = Enrollment.objects.get(id=id)
+        enrollment.delete()
+        return Response(status=204) # no content

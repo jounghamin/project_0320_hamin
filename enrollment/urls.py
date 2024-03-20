@@ -21,5 +21,5 @@ from enrollment import views
 
 urlpatterns = [
     path('',views.enrollment_list),
-    # path('<int:id>/',views.enrollment_detail)
+    path('<int:id>/',views.enrollment_detail)
 ]

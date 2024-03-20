@@ -35,7 +35,7 @@ def student_detail(request, id):
         student = Student.objects.get(id=id) # 어떤 게시글을 수정할지
         data = request.data # 어떤 내용으로 수정할지
 
-        serializer = StudentSerializers(student, data=data)
+        serializer = StudentSerializers(student, data=data, partial=True)
         # serializer = ArticleSerializer(article, data=data, partial=True)  # 부분 수정
 
         if serializer.is_valid(raise_exception=True):

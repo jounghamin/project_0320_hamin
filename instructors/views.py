@@ -29,14 +29,16 @@ def instructor_list(request):
 def instructor_detail(request, id):
     if request.method == 'GET':
         instructor = Instructor.objects.get(id=id)
-        serializer = InstructorSerializers(Instructor)
+        serializer = InstructorSerializers(instructor)
         return Response(serializer.data)
+        
     
     elif request.method == 'PUT':
-        Instructor = Instructor.objects.get(id=id) # 어떤 게시글을 수정할지
+
+        instructor = Instructor.objects.get(id=id) # 어떤 게시글을 수정할지
         data = request.data # 어떤 내용으로 수정할지
 
-        serializer = InstructorSerializers(Instructor, data=data)
+        serializer = InstructorSerializers(instructor, data=data , partial=True)
         # serializer = ArticleSerializer(article, data=data, partial=True)  # 부분 수정
 
         if serializer.is_valid(raise_exception=True):
@@ -44,6 +46,6 @@ def instructor_detail(request, id):
             return Response(serializer.data)
     
     elif request.method == 'DELETE':
-        Instructor = Instructor.objects.get(id=id)
-        Instructor.delete()
+        instructor = Instructor.objects.get(id=id)
+        instructor.delete()
         return Response(status=204) # no content
